@@ -25,7 +25,6 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
-import android.preference.PreferenceManager;
 import android.provider.MediaStore;
 import android.support.v4.content.ContextCompat;
 import android.text.InputType;
@@ -41,42 +40,39 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Toast;
+
 import com.github.lzyzsd.circleprogress.DonutProgress;
+import com.moez.QKSMS.R;
+import com.moez.QKSMS.common.AnalyticsManager;
 import com.moez.QKSMS.common.LiveViewManager;
+import com.moez.QKSMS.common.utils.ImageUtils;
+import com.moez.QKSMS.common.utils.PhoneNumberUtils;
+import com.moez.QKSMS.data.Conversation;
+import com.moez.QKSMS.data.ConversationLegacy;
 import com.moez.QKSMS.enums.QKPreference;
+import com.moez.QKSMS.interfaces.ActivityLauncher;
+import com.moez.QKSMS.interfaces.RecipientProvider;
 import com.moez.QKSMS.mmssms.Message;
 import com.moez.QKSMS.mmssms.Transaction;
 import com.moez.QKSMS.mmssms.Utils;
-import com.moez.QKSMS.R;
-import com.moez.QKSMS.common.AnalyticsManager;
-import com.moez.QKSMS.data.Conversation;
-import com.moez.QKSMS.data.ConversationLegacy;
-import com.moez.QKSMS.interfaces.ActivityLauncher;
-import com.moez.QKSMS.interfaces.RecipientProvider;
-import com.moez.QKSMS.common.utils.ImageUtils;
-import com.moez.QKSMS.common.utils.PhoneNumberUtils;
 import com.moez.QKSMS.transaction.NotificationManager;
 import com.moez.QKSMS.transaction.SmsHelper;
-import com.moez.QKSMS.ui.BlackList;
-import com.moez.QKSMS.ui.MainActivity;
 import com.moez.QKSMS.ui.ThemeManager;
 import com.moez.QKSMS.ui.base.QKActivity;
 import com.moez.QKSMS.ui.dialog.DefaultSmsHelper;
 import com.moez.QKSMS.ui.dialog.QKDialog;
 import com.moez.QKSMS.ui.dialog.mms.MMSSetupFragment;
 import com.moez.QKSMS.ui.settings.SettingsFragment;
+
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
-import java.util.Objects;
 
 public class ComposeView extends LinearLayout implements View.OnClickListener {
-    public final static String TAG = "ComposeView";
+    public final static String TAG = "ComposeViewTag";
 
     private final String KEY_DELAYED_INFO_DIALOG_SHOWN = "delayed_info_dialog_shown";
 
@@ -151,7 +147,6 @@ public class ComposeView extends LinearLayout implements View.OnClickListener {
 
     public ComposeView(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
-
         mContext = (QKActivity) context;
         mPrefs = mContext.getPrefs();
         mRes = mContext.getResources();
@@ -464,11 +459,9 @@ public class ComposeView extends LinearLayout implements View.OnClickListener {
             getNum.append(value);
         }
         String number = getNum.toString();
-        boolean checkNumber = blackList.contains(number);
         Log.d(TAG,"NumberSMS: "+number);
         Log.d(TAG,"NumberBlackList: "+"'"+blackList+"'");
-        Log.d(TAG,"NumberCheck: "+checkNumber);
-        if(checkNumber && blackList != ""){
+        if(!blackList.contains(number)){
             Toast.makeText(mContext, "Outgoing Message Blocked", Toast.LENGTH_SHORT).show();
         }else {
             // If we have some recipients, send the message!

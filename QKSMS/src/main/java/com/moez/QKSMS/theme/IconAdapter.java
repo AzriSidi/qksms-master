@@ -1,7 +1,7 @@
 package com.moez.QKSMS.theme;
 
 import android.content.Context;
-import android.support.v7.internal.widget.AdapterViewCompat;
+import android.widget.AdapterView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,7 +11,7 @@ import com.moez.QKSMS.R;
 public class IconAdapter extends RecyclerView.Adapter<IconViewHolder> {
 
     private Context mContext;
-    private AdapterViewCompat.OnItemClickListener mOnItemClickListener;
+    private AdapterView.OnItemClickListener mOnItemClickListener;
     private int[] mIconIds = new int[]{
             R.mipmap.ic_launcher, R.mipmap.ic_launcher_dark, R.mipmap.ic_launcher_red, R.mipmap.ic_launcher_pink,
             R.mipmap.ic_launcher_purple, R.mipmap.ic_launcher_deep_purple, R.mipmap.ic_launcher_indigo,
@@ -22,7 +22,7 @@ public class IconAdapter extends RecyclerView.Adapter<IconViewHolder> {
             R.mipmap.ic_launcher_grey, R.mipmap.ic_launcher_blue_grey
     };
 
-    public IconAdapter(Context context, AdapterViewCompat.OnItemClickListener onItemClickListener) {
+    public IconAdapter(Context context, AdapterView.OnItemClickListener onItemClickListener) {
         mContext = context;
         mOnItemClickListener = onItemClickListener;
     }
