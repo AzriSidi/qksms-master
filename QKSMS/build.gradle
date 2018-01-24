@@ -13,10 +13,10 @@ android {
     useLibrary 'org.apache.http.legacy'
     signingConfigs {
         release {
-            keyAlias 'android'
-            keyPassword 'android'
-            storeFile file('C:/key/platform.jks')
-            storePassword 'android'
+            storeFile file("../keystore/platform.jks")
+            keyAlias "android"
+            keyPassword "android"
+            storePassword "android"
         }
     }
     flavorDimensions "analytics"
@@ -47,11 +47,9 @@ android {
             minifyEnabled true
             shrinkResources true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'qksms-proguard.pro'
+            signingConfig signingConfigs.release
         }
         debug {
-            minifyEnabled true
-            shrinkResources true
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'qksms-proguard.pro'
             signingConfig signingConfigs.release
         }
     }
@@ -109,7 +107,7 @@ dependencies {
     compile 'com.android.support:design:26.1.0'
     compile 'com.android.support:support-v13:26.1.0'
     compile 'com.android.support:recyclerview-v7:26.1.0'
-    withAnalyticsCompile 'com.google.android.gms:play-services-analytics:8.3.0'
+    withAnalyticsCompile 'com.google.android.gms:play-services-analytics:11.8.0'
     // External services
     withAnalyticsCompile('com.crashlytics.sdk.android:crashlytics:2.5.5@aar') {
         transitive = true
